@@ -104,8 +104,7 @@ def main(username, client_id, client_secret, redirect_uri, playlist_name,
     print('Created playlist at {} (external url: {} )'.format(
         playlist_uri, playlist_public_url))
     # Spotify limits adding 100 tracks at a time to a playlist
-    chunk_size = 100
-    for chunk in chunks(track_ids, chunk_size):
+    for chunk in chunks(track_ids, 100):
         print('Adding {} tracks to playlist...'.format(len(chunk)))
         add_track_res = sp.user_playlist_add_tracks(user_id, create_resp['id'],
                                                     chunk)
