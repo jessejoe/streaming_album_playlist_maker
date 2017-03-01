@@ -19,6 +19,30 @@ pip install -r requirements.txt
 
 ## Running the script
 
+See the `--help`:
+```
+./create_playlist.py --help
+Usage: create_playlist.py [OPTIONS] INPUT_FILE
+
+  This script will take a list of album names from INPUT_FILE and create a
+  playlist of all their tracks
+
+  See https://developer.spotify.com/web-api/tutorial/ for how to register an
+  application to get a client_id, client_secret, and redirect_uri
+
+Options:
+  --username TEXT       Spotify username to create the playlist with
+                        [required]
+  --client_id TEXT      Client ID from your appplication, can be set with env
+                        var SPOTIPY_CLIENT_ID  [required]
+  --client_secret TEXT  Client Secret from your application, can be set with
+                        env var SPOTIPY_CLIENT_SECRET  [required]
+  --redirect_uri TEXT   A whitelisted Redirect URI for your application, can
+                        be set with env var SPOTIPY_REDIRECT_URI  [required]
+  --playlist_name TEXT  Name of playlist to create  [required]
+  -h, --help            Show this message and exit.
+  ```
+
 Create a text file with a list of album names (1 per line) called `input.txt`. Ran the script with all the parameters for your application substituted:
 ```
 ./create_playlist.py --username my_username --client_id 12345 --client_secret ABCDE --redirect_uri https://example.com/callback/ --playlist_name '39 essential albums for audiophiles' input.txt
