@@ -1,8 +1,12 @@
-# Spotify Album Playlist Maker
+# Streaming Album Playlist Maker
 
-This is a script to take a file containing a list of album names, and creates a Spotify playlist of them.
+This is a script to take a file containing a list of album names, and creates a playlist of them on music streaming services (i.e. Spotify).
 
 I often find "best of" lists that I want to create a playlist of, or I want to make a playlist of an artist's studio discography. It's tedious searching and adding album after album, so this automates it for you. I couldn't find something like this out there already.
+
+## Spotify
+
+Currently only Spotify is supported, but the tool is written to be easily expandable for other services (feel free to contribute!).
 
 ## Authentication
 
@@ -10,22 +14,36 @@ You will need to create an application in the [Spotify Developer portal](https:/
 
 The script uses the [Spotipy python client library](http://spotipy.readthedocs.io/en/latest/) for most of the real work. The first time you run the script it should launch a browser window and prompt you to give your application (this script using your keys) permission to be able to create public playlists. See the [Spotipy docs on Authorization](http://spotipy.readthedocs.io/en/latest/#authorized-requests) for more details.
 
-## Requirements
+# Requirements
 
 You will need to install the libraries in the `requirements.txt` file:
 ```
 pip install -r requirements.txt
 ```
 
-## Running the script
+# Running the script
 
 See the `--help`:
 ```
 ./create_playlist.py --help
-Usage: create_playlist.py [OPTIONS] INPUT_FILE
+Usage: create_playlist.py [OPTIONS] INPUT_FILE COMMAND [ARGS]...
 
   This script will take a list of album names from INPUT_FILE and create a
   playlist of all their tracks
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  spotify  Create playlist for Spotify See...
+```
+
+As mentioned, the script is written to work with multiple services, each of which most likely would support different options, and are provided as the command after the input filename. To see the help for a command:
+```
+$ ./create_playlist.py input.txt spotify --help
+Usage: create_playlist.py spotify [OPTIONS]
+
+  Create playlist for Spotify
 
   See https://developer.spotify.com/web-api/tutorial/ for how to register an
   application to get a client_id, client_secret, and redirect_uri
@@ -38,17 +56,18 @@ Options:
   --client_secret TEXT  Client Secret from your application, can be set with
                         env var SPOTIPY_CLIENT_SECRET  [required]
   --redirect_uri TEXT   A whitelisted Redirect URI for your application, can
-                        be set with env var SPOTIPY_REDIRECT_URI  [required]
+                        be set with env var SPOTIPY_REDIRECT_URI  [default:
+                        https://example.com/callback/]
   --playlist_name TEXT  Name of playlist to create  [required]
   -h, --help            Show this message and exit.
-  ```
+```
 
 Create a text file with a list of album names (1 per line) called `input.txt`. Ran the script with all the parameters for your application substituted:
 ```
-./create_playlist.py --username my_username --client_id 12345 --client_secret ABCDE --redirect_uri https://example.com/callback/ --playlist_name '39 essential albums for audiophiles' input.txt
+./create_playlist.py input.txt spotify --username my_username --client_id 12345 --client_secret ABCDE --playlist_name '39 essential albums for audiophiles'
 ```
 
-## Example
+# Example
 
 Using the list from http://www.stuff.tv/features/39-essential-albums-audiophiles create a file called `input.txt` containing the following:
 ```
@@ -97,7 +116,7 @@ The script will only look for albums, so putting the artist on the line will hel
 
 Run the script:
 ```
-./create_playlist.py --username my_username --client_id 12345 --client_secret ABCDE --redirect_uri https://example.com/callback/ --playlist_name '39 essential albums for audiophiles' input.txt
+./create_playlist.py input.txt spotify --username my_username --client_id 12345 --client_secret ABCDE --playlist_name '39 essential albums for audiophiles'
 ```
 
 The script should run with the following output:
@@ -197,6 +216,6 @@ Adding 84 tracks to playlist...
 All tracks added successfully!
 ```
 
-## Notes
+# Notes
 
 The script does as much batching as possible for looking up album tracks and adding tracks to playlists, however there is no API for batch searching. It's possible to get rate limited if you hit the API too frequently. As shown above, I've been able to run the script with 38 albums and 684 tracks without issue, so I have not added any logic for honoring Spotify's [rate limiting](https://developer.spotify.com/web-api/user-guide/#rate-limiting) or `Retry-After` headers.
