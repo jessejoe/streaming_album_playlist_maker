@@ -25,7 +25,7 @@ pip install -r requirements.txt
 
 See the `--help`:
 ```
-./create_playlist.py --help
+$ ./streaming_album_playlist_maker.py --help
 Usage: create_playlist.py [OPTIONS] INPUT_FILE COMMAND [ARGS]...
 
   This script will take a list of album names from INPUT_FILE and create a
@@ -40,7 +40,7 @@ Commands:
 
 As mentioned, the script is written to work with multiple services, each of which most likely would support different options, and are provided as the command after the input filename. To see the help for a command:
 ```
-$ ./create_playlist.py input.txt spotify --help
+$ ./streaming_album_playlist_maker.py input.txt spotify --help
 Usage: create_playlist.py spotify [OPTIONS]
 
   Create playlist for Spotify
@@ -64,7 +64,7 @@ Options:
 
 Create a text file with a list of album names (1 per line) called `input.txt`. Ran the script with all the parameters for your application substituted:
 ```
-./create_playlist.py input.txt spotify --username my_username --client_id 12345 --client_secret ABCDE --playlist_name '39 essential albums for audiophiles'
+$ ./streaming_album_playlist_maker.py input.txt spotify --username my_username --client_id 12345 --client_secret ABCDE --playlist_name '39 essential albums for audiophiles'
 ```
 
 # Example
